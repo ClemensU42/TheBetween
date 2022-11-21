@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "the_between",
+  "version": "${version}",
+
+  "name": "The Between",
+  "description": "This mod adds a new dimension which is filled with pure darkness and a whole lot of new, scary and dangerous mobs.",
+  "authors": [
+    "ClemensU42"
+  ],
+  "contact": {
+    "sources": ""
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/the_between/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "io.github.clemensu42.the_between.common.TheBetween"
+    ],
+    "client": [
+      "io.github.clemensu42.the_between.client.TheBetweenClient"
+    ]
+  },
+  "mixins": [
+    "the_between.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.10",
+    "fabric-api": "*",
+    "minecraft": "~1.19",
+    "java": ">=17"
+  },
+  "suggests": {
+
+  }
+}
