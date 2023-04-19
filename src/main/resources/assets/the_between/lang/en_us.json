@@ -1,6 +1,5 @@
 {
-  "item.the_between.echorite_ingot": "Echorite Ingot",
-  "item.the_between.tenerite_ingot": "Tenerite Ingot",
+  "item.the_between.echorite_ingot": "§9Echorite Ingot",
 
-  "itemGroup.the_between.materials_group": "The Between Materials"
+  "itemGroup.the_between.materials_group": "The Between: Materials"
 }
