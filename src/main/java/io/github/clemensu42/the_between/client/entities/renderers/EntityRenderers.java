@@ -5,6 +5,10 @@ import io.github.clemensu42.the_between.common.TheBetween;
 import io.github.clemensu42.the_between.common.entities.EntityTypes;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.mixin.blockrenderlayer.RenderLayersMixin;
+import net.minecraft.client.render.RenderLayers;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.VertexConsumers;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.util.Identifier;
 

@@ -1,16 +1,17 @@
 package io.github.clemensu42.the_between.client.entities.renderers;
 
-import io.github.clemensu42.the_between.client.entities.models.PortalEntityModel;
+import com.mojang.blaze3d.systems.RenderSystem;
+import io.github.clemensu42.the_between.client.render.TheBetweenRenderLayers;
+import io.github.clemensu42.the_between.client.render.TheBetweenRenderer;
 import io.github.clemensu42.the_between.common.TheBetween;
 import io.github.clemensu42.the_between.common.entities.PortalEntity;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayers;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import io.github.clemensu42.the_between.client.entities.models.PortalEntityModel;
+import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import org.joml.Matrix4f;
 
 public class PortalEntityRenderer extends EntityRenderer<PortalEntity> {
     private PortalEntityModel model;
@@ -26,17 +27,27 @@ public class PortalEntityRenderer extends EntityRenderer<PortalEntity> {
 
     @Override
     public void render(PortalEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+        model.age += tickDelta;
+        model.shatteringProgress = entity.shatterProgress;
         matrices.push();
 
         matrices.scale(1.0F, -1.0F, 1.0F);
-        matrices.translate(0.0F, -1.5F, 0.0F);
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.model.getLayer(this.getTexture(entity)));
         int p = OverlayTexture.DEFAULT_UV;
         model.render(matrices, vertexConsumer, light, p, 1F, 1F, 1F, 1F);
 
-        matrices.pop();
+        if(entity.shatterProgress > 0.0) {
+            model.renderShards(matrices);
+        }
+
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
+
+        if(entity.shatterProgress <= 0.0){
+            model.renderInnerPortal(matrices);
+        }
+        matrices.pop();
     }
+
 
 
 }
