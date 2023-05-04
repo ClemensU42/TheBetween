@@ -43,7 +43,7 @@ public class PortalEntityRenderer extends EntityRenderer<PortalEntity> {
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
 
         if(entity.shatterProgress <= 0.0){
-            model.renderInnerPortal(matrices);
+            model.renderInnerPortal(matrices, entity.world.getTime(), tickDelta);
         }
         matrices.pop();
     }

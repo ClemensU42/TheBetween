@@ -1,11 +1,13 @@
 package io.github.clemensu42.the_between.client.entities.models;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.clemensu42.the_between.client.entities.renderers.EntityRenderers;
 import io.github.clemensu42.the_between.client.render.TheBetweenRenderer;
 import io.github.clemensu42.the_between.common.TheBetween;
 import io.github.clemensu42.the_between.common.entities.PortalEntity;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -233,13 +235,15 @@ public class PortalEntityModel extends EntityModel<Entity> {
 
 	}
 
-	public void renderInnerPortal(MatrixStack matrices){
+	public void renderInnerPortal(MatrixStack matrices, long time, float tickDelta){
 		Matrix4f positionMatrix = matrices.peek().getPositionMatrix().translate(0.0f, -1.625f, 0.0f).scale(1.25f);
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferBuilder = tessellator.getBuffer();
 		RenderSystem.setShader(() -> TheBetweenRenderer.FULL_PORTAL_PROGRAM);
+		RenderSystem.setShaderGameTime(time, tickDelta);
 		RenderSystem.enableDepthTest();
 		RenderSystem.enableCull();
+
 		bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
 
 		bufferBuilder.vertex(positionMatrix, 1.0f, 1.0f, 0.0f).texture(1.0f, 1.0f).next();
@@ -262,6 +266,8 @@ public class PortalEntityModel extends EntityModel<Entity> {
 			RenderSystem.setShader(() -> TheBetweenRenderer.PORTAL_SHARD_PROGRAM);
 			RenderSystem.enableDepthTest();
 			RenderSystem.enableCull();
+			RenderSystem.enableBlend();
+            //RenderSystem.blendFunc(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA);
 			RenderSystem.setShaderTexture(0, new Identifier(TheBetween.MODID, "textures/entity/portal/portal.png"));
 			bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
 			for(int i = 0; i < ShardModels.size(); i++){

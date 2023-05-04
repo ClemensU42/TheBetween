@@ -6,7 +6,6 @@
   "mixins": [
   ],
   "client": [
-    "client.BufferBuilderStorageMixin"
   ],
   "injectors": {
     "defaultRequire": 1
